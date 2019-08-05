@@ -1,0 +1,77 @@
+I’ve got a couple of suggestions to make it even more useful – as you rightly guessed, we’d be doing instant wins as well, so it’d be great to simulate those rather than just say “10% are instant wins, so let’s only simulate 90% of the stickers”.
+
+ 
+
+I’ve asked the sales manager for %s that each tier spends so we can at least change what the default value is in those fields – I doubt I’d be able to get the full sales data out of him though.
+
+ 
+
+Additions!
+
+ 
+
+- Fields for monetary value of each prize, and a ‘total spent on prizes’ output, so we can have some idea of what this monstrosity will cost us as we're playing with the odds. Maybe also ‘total quantity of each prize given away’ just because I know I'll be asked?
+
+ 
+
+- An ‘instant win’ row, that isn't taken into account when the ‘must win previous row’ rule is turned on. I'm thinking of having a few different ones, so a full row of 7 would be good. If possible, also have a togglable rule about whether individual instant win prizes can be won multiple times or just once? Unlike the previous game, I think we’ll make them less “instant wins” and more “you don’t need to fill rows to win these ones”. Maybe have them as wrapped presents under the tree or something.
+
+ 
+
+- Is there a way of making a "save state"? ie. once I've messed around with several options and found something I like, I can come back to it another day or send it to someone? Either as a link or a CSV (or whatever) that can be downloaded and uploaded?
+
+ 
+
+- How much extra work would it be to have it spit out the experience for one customer? It sounds like the maths might already be there. So for example I could say “what would a customer who gets [23] stickers throughout the whole thing likely win?”. Because I reckon I’ll also be asked that
+
+ 
+
+Thanks a lot for what you’ve done so far; great initiative on just making it a “over the whole game” thing!
+
+ 
+
+--- 
+
+In experimentation I have found a minor bug that sometimes after changing the tier values (frequencies and percentages), the tier numbers in the report panel do not correspond exactly to the same tiers defined in the one above it. I'm not sure what's causing this but I should be able to iron it out when I clean up and refactor the code. For now it's not very important since I rather assume those frequencies are fixed as they came from your customer data. Just be aware that if you tweak them a lot then sometimes the report is mislabelled - figured that's worth mentioning!
+
+ 
+
+-J
+
+
+
+---
+
+Thank you for the kind words on the progress. My aim was to make an equivalent simulation to the one from November in the sense that it would give you a "feel" for what was going on in your system, but this time on a wider scale, and I'm super happy that you like it!
+
+"I’ve got a couple of suggestions to make it even more useful – as you rightly guessed, we’d be doing instant wins as well, so it’d be great to simulate those rather than just say “10% are instant wins, so let’s only simulate 90% of the stickers”."
+
+Absolutely brilliant. Can do!
+
+"I’ve asked the sales manager for %s that each tier spends so we can at least change what the default value is in those fields – I doubt I’d be able to get the full sales data out of him though."
+
+Fantastic. I'm really glad that part makes sense and you understood that I had to put in my own estimated values but that to be a useful model it needs to be the correct ones from your sales data. (That's not supposed to sound patronising, I just know from experience that sometimes it's not clear what is and isn't placeholder - as a designer I'm sure you sympathise!) I know I was rather enthusiastic in the previous email to use detailed sales data in the next build, but if you just apply accurate percentage of sales for each tier then that's good enough.
+
+"Fields for monetary value of each prize, and a ‘total spent on prizes’ output, so we can have some idea of what this monstrosity will cost us as we're playing with the odds. Maybe also ‘total quantity of each prize given away’ just because I know I'll be asked?"
+
+No problem. Can definitely add all that. Great call!
+
+"An ‘instant win’ row, that isn't taken into account when the ‘must win previous row’ rule is turned on. I'm thinking of having a few different ones, so a full row of 7 would be good. If possible, also have a togglable rule about whether individual instant win prizes can be won multiple times or just once? Unlike the previous game, I think we’ll make them less “instant wins” and more “you don’t need to fill rows to win these ones”. Maybe have them as wrapped presents under the tree or something."
+
+Brilliant. That's all fine too!
+
+"Is there a way of making a "save state"? ie. once I've messed around with several options and found something I like, I can come back to it another day or send it to someone? Either as a link or a CSV (or whatever) that can be downloaded and uploaded?"
+
+Completely doable. I think the most straightforward way is with a hashcode (like a "level code" from the 16-bit era!). So you have the page set up how you like and click the "export hash" button, then save that code and you can submit it into a field on the page to reimport the same settings. I will also make it pump out a URL (which will just be jdgmiles.github.io/DaveSim?[whatever_the_code_is] ) If you need to send it to someone as a link.
+
+"How much extra work would it be to have it spit out the experience for one customer? It sounds like the maths might already be there. So for example I could say “what would a customer who gets [23] stickers throughout the whole thing likely win?”. Because I reckon I’ll also be asked that"
+
+You are completely correct that all the maths is here and we can easily add a micro-sim option for a single customer. Again, will add!
+
+---
+
+Excellent, that all sounds great!
+
+ 
+
+The sales manager is away for an event next week so I won’t be able to get those percentages to you any time soon. But I guess if we make those values one of the things saved in the hash, that won’t be a problem? I’ll just have to save a “fresh” one where the percentages are the only thing I’ve changed, and I can always start from there.
