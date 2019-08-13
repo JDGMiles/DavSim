@@ -1,11 +1,6 @@
-Instant Win stickers for each row
-
-Fields for monetary value of each prize, and a ‘total spent on prizes’ output, so we can have some idea of what this monstrosity will cost us as we're playing with the odds. Maybe also ‘total quantity of each prize given away’ just because I know I'll be asked?
-
-An ‘instant win’ row, that isn't taken into account when the ‘must win previous row’ rule is turned on. I'm thinking of having a few different ones, so a full row of 7 would be good. If possible, also have a togglable rule about whether individual instant win prizes can be won multiple times or just once? Unlike the previous game, I think we’ll make them less “instant wins” and more “you don’t need to fill rows to win these ones”. Maybe have them as wrapped presents under the tree or something.
+spit out the experience for one customer
+So for example I could say 'what would a customer who gets [23] stickers throughout the whole thing likely win?''.
 
 save state
 
-How much extra work would it be to have it spit out the experience for one customer? It sounds like the maths might already be there. So for example I could say “what would a customer who gets [23] stickers throughout the whole thing likely win?”. Because I reckon I’ll also be asked that
-
-The sales manager is away for an event next week so I won’t be able to get those percentages to you any time soon. But I guess if we make those values one of the things saved in the hash, that won’t be a problem? I’ll just have to save a “fresh” one where the percentages are the only thing I’ve changed, and I can always start from there.
+all done

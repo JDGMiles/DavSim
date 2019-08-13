@@ -7,33 +7,33 @@
 
 body {font-family: Liberation Serif, Tahoma, Arial, Helvetica, Sans-Serif; background-color:black; color:white; cursor:default; text-align:center;}
 
-.maintable {border: 1px solid white; width:1450px; height:800px;}
+.maintable {text-align:center; border: 1px solid white; width:1450px; height:800px;}
 .lefthalf {border: 1px solid white; width:720px; height:800px;}
 .righthalf {border: 1px solid white; width:720px; height:800px;}
 .singlelinefield {border: 1px solid white; width:700px;}
+.costrow {text-align:right; border: 1px solid white; width:700px;}
 
 .simulatebutton {border: 1px solid white; width:700px; height:30px; background-color:#CBCB00; color:black;}
 
 .righttop {border: 1px solid white; width:720px; height:400px;}
 .rightbottom {border: 1px solid white; width:720px; height:400px;}
 
-.reportbox {font-size:30px; overflow:auto; height:338px;}
+.reportbox {font-size:30px; overflow:auto; height:900px;}
 
 .cardsection {border: 1px solid white; width:720px; height:575px;}
 
 .stickercell {border: 1px solid white; width:100px; height:100px; font-size:20px;}
+.presentcell {background-color:#440000; border: 1px solid white; width:100px; height:100px; font-size:20px;}
 .stickercellpercent {background-color:#08188D; color:white; font-size:28px; width:43px; text-align:center; font-family: Liberation Serif, Tahoma, Arial, Helvetica, Sans-Serif;}
 
 .totalstickersbox {background-color:#08188D; color:white; font-size:40px; width:170px; text-align:center; font-family: Liberation Serif, Tahoma, Arial, Helvetica, Sans-Serif;}
 
 .customertierline {width:700px; font-size:41px}
 .freqbox {background-color:#08188D; color:white; font-size:37px; width:70px; text-align:center; font-family: Liberation Serif, Tahoma, Arial, Helvetica, Sans-Serif;}
+.onecustomersimtixbox {background-color:#A9A900; color:black; font-size:37px; width:70px; text-align:center; font-family: Liberation Serif, Tahoma, Arial, Helvetica, Sans-Serif;}
 .sharebox {background-color:#08188D; color:white; font-size:37px; width:60px; text-align:center; font-family: Liberation Serif, Tahoma, Arial, Helvetica, Sans-Serif;}
+.prizecostbox {background-color:#08188D; color:white; font-size:37px; width:260px; text-align:center; font-family: Liberation Serif, Tahoma, Arial, Helvetica, Sans-Serif;}
 
 .container {
-    position: absolute;
-    top: 50%;
-    left: 50%;
-    transform: translateX(-50%) translateY(-50%);
-    font-size: 42px;
+  font-size: 42px;
 }
