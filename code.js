@@ -430,6 +430,8 @@ if(inputfeed[0]=="?"){
   prizecostupdate();
   for(i=7; i>0; i--){document.getElementById('freq'+i).value=parameters[57-i];}
   for(i=7; i>0; i--){document.getElementById('share'+i).value=parameters[64-i];}
+  frequpdate();
+  shareupdate();
 }
 
 function shuffle(arra1) {
