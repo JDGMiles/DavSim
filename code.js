@@ -3,6 +3,9 @@ var totalstickers=document.getElementById('totalstickersfield').value;
 var sameprizerule=1; // 1: "can't win same row multiple times", 0: "can ~"
 var prevrowrule=1; // 1: "do need to complete previous rows to claim prize", 0: "don't ~"
 var presentgreedrule=1; // 1: "can't win same present multiple times", 0: "can ~"
+var onlyclaimonerowrule=1; // 1: "can only claim highest prize", 0: "can't ~"
+var stickerssameinrowrule=1; // 1: "stickers are the same in a row", 0: "~ aren't ~"
+var needpreviousrowsfortopprizerule=1; // "do need to complete previous rows to claim top prize", 0: "don't ~"
 
 var inputfeed=location.search;
 
@@ -58,13 +61,13 @@ var customertier = [];
 
 function prevrows() {
   prevrowrule=(prevrowrule+1)%2;
-  if(prevrowrule==1){
-    document.getElementById('prevrowbutton').innerHTML="Do Need To Complete Previous Rows";
-    document.getElementById('prevrowbutton').style.backgroundColor="#662200";
-  }
-  else{
+  if(prevrowrule==0){
     document.getElementById('prevrowbutton').innerHTML="Don't Need To Complete Previous Rows";
     document.getElementById('prevrowbutton').style.backgroundColor="#CC3300";
+  }
+  else{
+    document.getElementById('prevrowbutton').innerHTML="Do Need To Complete Previous Rows";
+    document.getElementById('prevrowbutton').style.backgroundColor="#662200";
   }
 }
 
@@ -89,6 +92,42 @@ function presentgreed() {
   else{
     document.getElementById('presentgreedbutton').innerHTML="Can't Win Same Present Multiple Times";
     document.getElementById('presentgreedbutton').style.backgroundColor="#662200";
+  }
+}
+
+function onlyclaimonerow() {
+  onlyclaimonerowrule=(onlyclaimonerowrule+1)%2;
+  if(onlyclaimonerowrule==0){
+    document.getElementById('onlyclaimonerowbutton').innerHTML="Can Claim All Completed Rows";
+    document.getElementById('onlyclaimonerowbutton').style.backgroundColor="#CC3300";
+  }
+  else{
+    document.getElementById('onlyclaimonerowbutton').innerHTML="Can Only Claim Best Row";
+    document.getElementById('onlyclaimonerowbutton').style.backgroundColor="#662200";
+  }
+}
+
+function stickerssameinrow() {
+  stickerssameinrowrule=(stickerssameinrowrule+1)%2;
+  if(stickerssameinrowrule==0){
+    document.getElementById('stickerssameinrowbutton').innerHTML="Stickers Different In A Row";
+    document.getElementById('stickerssameinrowbutton').style.backgroundColor="#CC3300";
+  }
+  else{
+    document.getElementById('stickerssameinrowbutton').innerHTML="Stickers Same In A Row";
+    document.getElementById('stickerssameinrowbutton').style.backgroundColor="#662200";
+  }
+}
+
+function needpreviousrowsfortopprize() {
+  needpreviousrowsfortopprizerule=(needpreviousrowsfortopprizerule+1)%2;
+  if(needpreviousrowsfortopprizerule==0){
+    document.getElementById('needpreviousrowsfortopprizebutton').innerHTML="Top Prize Doesn't Need All Rows";
+    document.getElementById('needpreviousrowsfortopprizebutton').style.backgroundColor="#CC3300";
+  }
+  else{
+    document.getElementById('needpreviousrowsfortopprizebutton').innerHTML="Top Prize Needs All Rows";
+    document.getElementById('needpreviousrowsfortopprizebutton').style.backgroundColor="#662200";
   }
 }
 
@@ -202,24 +241,64 @@ function onecustomersim() {
 
   for(var k=0; k<5; k++){wonrow[k]=0;}
 
-  for(var k=1; k<5; k++){
-    lost=0;
-    while(!lost){
-      rowholeno[k]=0;
-      holefillno=0;
-      for(var l=(34-(k*7)); l>(27-(k*7)); l--){
-        if(stickerF[l]!=0){rowholeno[k]++;}
-        if(wonstickers[l]!=0){holefillno++; wonstickers[l]--;}
+  if(!stickerssameinrowrule){
+    for(var k=1; k<5; k++){
+      lost=0;
+      while(!lost){
+        rowholeno[k]=0;
+        holefillno=0;
+        for(var l=(34-(k*7)); l>(27-(k*7)); l--){
+          if(stickerF[l]!=0){rowholeno[k]++;}
+          if(wonstickers[l]!=0){holefillno++; wonstickers[l]--;}
+        }
+        if(rowholeno[k]==holefillno && rowholeno[k]!=0){
+          if(!prevrowrule){wonrow[k]++;}
+          else {
+            if(k==1){wonrow[k]++;}
+            else if(rowholeno[k-1]==0){wonrow[k]++;}
+            else if(wonrow[k-1]!=0){wonrow[k]++;}
+          }
+        }
+        else{lost=1;}
       }
-      if(rowholeno[k]==holefillno && rowholeno[k]!=0){
-        if(!prevrowrule){wonrow[k]++;}
-        else {
-          if(k==1){wonrow[k]++;}
-          else if(rowholeno[k-1]==0){wonrow[k]++;}
-          else if(wonrow[k-1]!=0){wonrow[k]++;}
+    }
+  }
+
+  else{
+    for(var k=1; k<5; k++){
+      lost=0;
+      while(!lost){
+        rowholeno[k]=0;
+        holefillno=0;
+        for(var l=(34-(k*7)); l>(27-(k*7)); l--){
+          if(stickerF[l]!=0){rowholeno[k]++;}
+          if(wonstickers[l]!=0){holefillno+=wonstickers[l]; wonstickers[l]=0;}
+        }
+        if(rowholeno[k]<=holefillno && rowholeno[k]!=0){
+          if(!prevrowrule){wonrow[k]+=Math.floor(holefillno/rowholeno[k]);}
+          else {
+            if(k==1){wonrow[k]+=Math.floor(holefillno/rowholeno[k]);}
+            else if(rowholeno[k-1]==0){wonrow[k]+=Math.floor(holefillno/rowholeno[k]);}
+            else if(wonrow[k-1]!=0){wonrow[k]+=Math.floor(holefillno/rowholeno[k]);}
+          }
+        }
+        else{lost=1;}
+      }
+    }
+  }
+
+  if(needpreviousrowsfortopprizerule){
+    if(wonrow[1]!=0 && wonrow[2]!=0 && wonrow[3]!=0 && wonrow[4]!=0){}
+    else{wonrow[4]=0}
+  }
+
+  if(onlyclaimonerowrule){
+    for(var k=4; k>0; k--){
+      if(wonrow[k]!=0){
+        for(var p=k-1; p>0; p--){
+          wonrow[p]=0;
         }
       }
-      else{lost=1;}
     }
   }
 
@@ -313,24 +392,64 @@ function isawinneryou(customerindex) {
 function whatdoiwin(filledcard, cardindex) {
   for(var k=0; k<5; k++){wonrow[k]=0;}
 
-  for(var k=1; k<5; k++){
-    lost=0;
-    while(!lost){
-      rowholeno[k]=0;
-      holefillno=0;
-      for(var l=(34-(k*7)); l>(27-(k*7)); l--){
-        if(stickerF[l]!=0){rowholeno[k]++;}
-        if(filledcard[l]!=0){holefillno++; filledcard[l]--;}
+  if(!stickerssameinrowrule){
+    for(var k=1; k<5; k++){
+      lost=0;
+      while(!lost){
+        rowholeno[k]=0;
+        holefillno=0;
+        for(var l=(34-(k*7)); l>(27-(k*7)); l--){
+          if(stickerF[l]!=0){rowholeno[k]++;}
+          if(filledcard[l]!=0){holefillno++; filledcard[l]--;}
+        }
+        if(rowholeno[k]==holefillno && rowholeno[k]!=0){
+          if(!prevrowrule){wonrow[k]++;}
+          else {
+            if(k==1){wonrow[k]++;}
+            else if(rowholeno[k-1]==0){wonrow[k]++;}
+            else if(wonrow[k-1]!=0){wonrow[k]++;}
+          }
+        }
+        else{lost=1;}
       }
-      if(rowholeno[k]==holefillno && rowholeno[k]!=0){
-        if(!prevrowrule){wonrow[k]++;}
-        else {
-          if(k==1){wonrow[k]++;}
-          else if(rowholeno[k-1]==0){wonrow[k]++;}
-          else if(wonrow[k-1]!=0){wonrow[k]++;}
+    }
+  }
+
+  else{
+    for(var k=1; k<5; k++){
+      lost=0;
+      while(!lost){
+        rowholeno[k]=0;
+        holefillno=0;
+        for(var l=(34-(k*7)); l>(27-(k*7)); l--){
+          if(stickerF[l]!=0){rowholeno[k]++;}
+          if(filledcard[l]!=0){holefillno+=filledcard[l]; filledcard[l]=0;}
+        }
+        if(rowholeno[k]<=holefillno && rowholeno[k]!=0){
+          if(!prevrowrule){wonrow[k]+=Math.floor(holefillno/rowholeno[k]);}
+          else {
+            if(k==1){wonrow[k]+=Math.floor(holefillno/rowholeno[k]);}
+            else if(rowholeno[k-1]==0){wonrow[k]+=Math.floor(holefillno/rowholeno[k]);}
+            else if(wonrow[k-1]!=0){wonrow[k]+=Math.floor(holefillno/rowholeno[k]);}
+          }
+        }
+        else{lost=1;}
+      }
+    }
+  }
+
+  if(needpreviousrowsfortopprizerule){
+    if(wonrow[1]!=0 && wonrow[2]!=0 && wonrow[3]!=0 && wonrow[4]!=0){}
+    else{wonrow[4]=0}
+  }
+
+  if(onlyclaimonerowrule){
+    for(var k=4; k>0; k--){
+      if(wonrow[k]!=0){
+        for(var p=k-1; p>0; p--){
+          wonrow[p]=0;
         }
       }
-      else{lost=1;}
     }
   }
 
@@ -340,6 +459,7 @@ function whatdoiwin(filledcard, cardindex) {
       else{prizerecord[customertier[cardindex]][k]+=wonrow[k];}
     }
   }
+
   for(var k=0; k<7; k++){wonpresent[k]=0;}
 
   for(var k=0; k<7; k++){
@@ -413,6 +533,12 @@ function generatesavestatelink() {
   for(i=1; i<8; i++){outputurl+=''+document.getElementById('present'+i).value+',';}
   for(i=7; i>0; i--){outputurl+=''+document.getElementById('freq'+i).value+',';}
   for(i=7; i>0; i--){outputurl+=''+document.getElementById('share'+i).value+',';}
+  if(needpreviousrowsfortopprizerule==1){outputurl+="0,";}
+  else{outputurl+="1,";}
+  if(onlyclaimonerowrule==1){outputurl+="0,";}
+  else{outputurl+="1,";}
+  if(stickerssameinrowrule==1){outputurl+="0,";}
+  else{outputurl+="1,";}
   window.location.href = outputurl;
 }
 
@@ -432,6 +558,9 @@ if(inputfeed[0]=="?"){
   for(i=7; i>0; i--){document.getElementById('share'+i).value=parameters[64-i];}
   frequpdate();
   shareupdate();
+  if(parameters[64]==1){needpreviousrowsfortopprize();}
+  if(parameters[65]==1){onlyclaimonerow();}
+  if(parameters[66]==1){stickerssameinrow();}
 }
 
 function shuffle(arra1) {
